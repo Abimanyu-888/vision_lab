@@ -136,3 +136,11 @@ input[type=range]::-webkit-slider-thumb:hover { transform: scale(1.2); }
 .export-btn:active { transform: scale(0.95); }
 
 .bg-neon-mint { background: var(--neon-mint) !important; }
+.glass_panel {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}

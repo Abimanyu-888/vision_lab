@@ -1,0 +1,45 @@
+.canvas_container {
+    flex: 1;
+    border-radius: 1.5rem;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+}
+
+.canvas_bg_overlay {
+    position: absolute;
+    inset: 0;
+    background-image: url('https://grainy-gradients.vercel.app/noise.svg');
+    opacity: 0.2;
+    pointer-events: none;
+}
+.canvas_vignette {
+    position: absolute;
+    inset: 0;
+    background-image: radial-gradient(circle at center, transparent 0%, #05050A 140%);
+    pointer-events: none;
+}
+
+.image_wrapper {
+    position: relative;
+    width: 80%;
+    height: 80%;
+    transition: all 0.5s ease-out;
+}
+
+#preview_image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+    transition: all 0.2s;
+}

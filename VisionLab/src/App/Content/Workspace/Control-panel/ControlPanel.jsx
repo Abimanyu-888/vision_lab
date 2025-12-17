@@ -2,7 +2,7 @@ import './controlPanel.css'
 
 function ControlPanel(){
     return(
-        <div className="control-panel glass-panel">
+        <div className="control-panel glass_panel">
             
             <div className="panel-header">
                 <h2 className="panel-title">PARAMETERS</h2>

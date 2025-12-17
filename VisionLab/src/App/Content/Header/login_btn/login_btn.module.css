@@ -1,4 +1,4 @@
-.upload-btn {
+.upload_btn {
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -12,6 +12,6 @@
     cursor: pointer;
     transition: all 0.2s;
 }
-.upload-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(0, 240, 255, 0.5); }
-.upload-btn:hover i { animation: bounce 1s infinite; }
-.text-neon-blue { color: var(--neon-blue); }
+.upload_btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(0, 240, 255, 0.5); }
+.upload_btn:hover i { animation: bounce 1s infinite; }
+.text_neon_blue { color: var(--neon-blue); }

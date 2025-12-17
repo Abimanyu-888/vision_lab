@@ -1,10 +1,10 @@
 import ControlPanel from './Control-panel/ControlPanel.jsx'
 import Image from './image/Image.jsx'
-import './workspace.css'
+import styles from './workspace.module.css'
 
 function Workspace(){
     return(
-        <div className="workspace">
+        <div className={styles.workspace}>
             <Image/>
             <ControlPanel/>
         </div>

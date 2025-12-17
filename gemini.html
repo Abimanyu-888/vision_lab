@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vision AI | Gen-Z UI Prototype</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <!-- Tailwind Config for Custom Colors/Fonts -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['Space Grotesk', 'monospace'],
+                    },
+                    colors: {
+                        deep: '#05050A',
+                        glass: 'rgba(255, 255, 255, 0.05)',
+                        glassBorder: 'rgba(255, 255, 255, 0.1)',
+                        neon: {
+                            blue: '#00F0FF',
+                            purple: '#BD00FF',
+                            mint: '#00FF94',
+                            pink: '#FF0055'
+                        }
+                    },
+                    animation: {
+                        'float': 'float 6s ease-in-out infinite',
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'spin-slow': 'spin 12s linear infinite',
+                        'scan': 'scan 3s linear infinite',
+                    },
+                    keyframes: {
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        scan: {
+                            '0%': { top: '0%', opacity: '0' },
+                            '10%': { opacity: '1' },
+                            '90%': { opacity: '1' },
+                            '100%': { top: '100%', opacity: '0' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #05050A;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #333;
+            border-radius: 3px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #00F0FF;
+        }
+
+        /* Glassmorphism Utilities */
+        .glass-panel {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+        }
+        
+        .glass-panel:hover {
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 8px 32px 0 rgba(0, 240, 255, 0.1);
+        }
+
+        /* Neon Glows */
+        .glow-text-blue { text-shadow: 0 0 10px rgba(0, 240, 255, 0.5); }
+        .glow-box-blue { box-shadow: 0 0 20px rgba(0, 240, 255, 0.2); }
+        
+        /* Range Slider Styling */
+        input[type=range] {
+            -webkit-appearance: none;
+            width: 100%;
+            background: transparent;
+        }
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            height: 16px;
+            width: 16px;
+            border-radius: 50%;
+            background: #00F0FF;
+            cursor: pointer;
+            margin-top: -6px;
+            box-shadow: 0 0 10px #00F0FF;
+            transition: transform 0.2s;
+        }
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.2);
+        }
+        input[type=range]::-webkit-slider-runnable-track {
+            width: 100%;
+            height: 4px;
+            cursor: pointer;
+            background: rgba(255,255,255,0.1);
+            border-radius: 2px;
+        }
+
+        /* Animated Background Mesh */
+        .bg-mesh {
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            z-index: -1;
+            background: radial-gradient(circle at 15% 50%, rgba(0, 240, 255, 0.08), transparent 25%),
+                        radial-gradient(circle at 85% 30%, rgba(189, 0, 255, 0.08), transparent 25%);
+            overflow: hidden;
+        }
+
+        .loader-ring {
+            border: 3px solid rgba(255,255,255,0.1);
+            border-top: 3px solid #00F0FF;
+            border-radius: 50%;
+            width: 24px;
+            height: 24px;
+            animation: spin 1s linear infinite;
+        }
+    </style>
+</head>
+<body class="bg-deep text-white h-screen w-screen overflow-hidden font-sans selection:bg-neon-blue selection:text-black">
+
+    <!-- Background Decoration -->
+    <div class="bg-mesh"></div>
+
+    <div class="flex h-full">
+        
+        <!-- SIDEBAR -->
+        <nav class="w-20 lg:w-24 h-full glass-panel border-r border-white/5 flex flex-col items-center py-8 z-20 transition-all duration-300">
+            <!-- Logo Icon -->
+            <div class="mb-12 cursor-pointer group relative">
+                <div class="absolute -inset-2 bg-neon-blue/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                <i data-lucide="aperture" class="w-8 h-8 text-neon-blue animate-spin-slow"></i>
+            </div>
+
+            <!-- Nav Items -->
+            <div class="flex flex-col gap-8 w-full items-center">
+                <div class="group relative flex justify-center w-full">
+                    <div class="absolute left-0 w-1 h-8 bg-neon-blue rounded-r-full scale-y-0 group-hover:scale-y-100 transition-transform duration-300"></div>
+                    <button class="p-3 rounded-2xl bg-white/5 hover:bg-neon-blue/20 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110 group-hover:shadow-[0_0_15px_rgba(0,240,255,0.3)]">
+                        <i data-lucide="scan-line" class="w-6 h-6"></i>
+                    </button>
+                    <!-- Tooltip -->
+                    <span class="absolute left-20 top-3 bg-black/80 backdrop-blur px-3 py-1 rounded text-xs font-mono text-neon-blue opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">OCR Scan</span>
+                </div>
+
+                <div class="group relative flex justify-center w-full">
+                    <button class="p-3 rounded-2xl bg-transparent hover:bg-neon-purple/20 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110">
+                        <i data-lucide="wand-2" class="w-6 h-6"></i>
+                    </button>
+                    <span class="absolute left-20 top-3 bg-black/80 backdrop-blur px-3 py-1 rounded text-xs font-mono text-neon-purple opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Magic Filters</span>
+                </div>
+
+                <div class="group relative flex justify-center w-full">
+                    <button class="p-3 rounded-2xl bg-transparent hover:bg-neon-mint/20 text-gray-400 hover:text-white transition-all duration-300 hover:scale-110">
+                        <i data-lucide="layers" class="w-6 h-6"></i>
+                    </button>
+                     <span class="absolute left-20 top-3 bg-black/80 backdrop-blur px-3 py-1 rounded text-xs font-mono text-neon-mint opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none whitespace-nowrap border border-white/10">Spatial Transform</span>
+                </div>
+            </div>
+
+            <!-- Bottom Settings -->
+            <div class="mt-auto">
+                <button class="p-3 rounded-full hover:bg-white/5 text-gray-500 hover:text-white transition-colors">
+                    <i data-lucide="settings" class="w-6 h-6 transition-transform duration-500 hover:rotate-90"></i>
+                </button>
+            </div>
+        </nav>
+
+        <!-- MAIN CANVAS AREA -->
+        <main class="flex-1 flex flex-col relative overflow-hidden">
+            
+            <!-- Top Bar -->
+            <header class="h-20 flex items-center justify-between px-8 z-10">
+                <div>
+                    <h1 class="font-mono text-2xl font-bold tracking-tight flex items-center gap-2">
+                        VISION<span class="text-neon-blue">.AI</span>
+                        <span class="text-[10px] bg-neon-blue/10 text-neon-blue px-2 py-0.5 rounded border border-neon-blue/20">BETA 2.0</span>
+                    </h1>
+                    <p class="text-xs text-gray-500 font-mono tracking-widest mt-1">NEURAL IMAGE PROCESSING UNIT</p>
+                </div>
+                
+                <div class="flex items-center gap-4">
+                    <button class="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-neon-blue/50 transition-all font-mono text-sm group">
+                        <i data-lucide="upload-cloud" class="w-4 h-4 text-neon-blue group-hover:animate-bounce"></i>
+                        <span>Upload Source</span>
+                    </button>
+                    <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-neon-blue to-neon-purple p-[1px]">
+                        <div class="w-full h-full rounded-full bg-black flex items-center justify-center overflow-hidden">
+                            <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=Felix" alt="User" class="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity">
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Workspace -->
+            <div class="flex-1 p-6 flex gap-6 overflow-hidden">
+                
+                <!-- Central Image Canvas -->
+                <div class="flex-1 glass-panel rounded-3xl relative overflow-hidden flex items-center justify-center group" id="canvas-container">
+                    
+                    <!-- Grid Overlay (Decorative) -->
+                    <div class="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-20 pointer-events-none"></div>
+                    <div class="absolute inset-0 pointer-events-none" style="background-image: radial-gradient(circle at center, transparent 0%, #05050A 140%);"></div>
+                    
+                    <!-- The "Image" (Placeholder) -->
+                    <div class="relative w-[80%] h-[80%] transition-all duration-500 ease-out transform" id="main-image-wrapper">
+                         <!-- Image Content -->
+                        <img 
+                            id="preview-image"
+                            src="https://images.unsplash.com/photo-1535905557558-afc4877a26fc?q=80&w=2574&auto=format&fit=crop" 
+                            alt="Cyberpunk City" 
+                            class="w-full h-full object-cover rounded-xl shadow-2xl transition-all duration-200"
+                        >
+
+                        <!-- Scanning Animation Overlay -->
+                        <div class="absolute inset-0 pointer-events-none overflow-hidden rounded-xl">
+                            <div class="absolute w-full h-1 bg-gradient-to-r from-transparent via-neon-blue to-transparent shadow-[0_0_15px_#00F0FF] animate-scan opacity-50"></div>
+                        </div>
+
+                        <!-- Bounding Boxes (Mock OCR Results) -->
+                        <div class="absolute top-[20%] left-[30%] w-24 h-16 border border-neon-mint/50 bg-neon-mint/10 rounded backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-all duration-500 delay-75 flex items-start justify-start overflow-visible hover:border-neon-mint cursor-crosshair">
+                            <div class="absolute -top-4 left-0 bg-neon-mint text-black text-[10px] font-bold px-1 rounded-t">0.98</div>
+                        </div>
+                        
+                        <div class="absolute bottom-[30%] right-[20%] w-32 h-20 border border-neon-purple/50 bg-neon-purple/10 rounded backdrop-blur-[1px] opacity-0 group-hover:opacity-100 transition-all duration-500 delay-150 flex items-start justify-start overflow-visible hover:border-neon-purple cursor-crosshair">
+                            <div class="absolute -top-4 left-0 bg-neon-purple text-white text-[10px] font-bold px-1 rounded-t">NEON SIGN</div>
+                        </div>
+                    </div>
+
+                    <!-- Empty State / Dropzone Hint -->
+                    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 flex items-center gap-2 text-white/40 text-sm font-mono bg-black/40 px-4 py-2 rounded-full backdrop-blur border border-white/5 pointer-events-none">
+                        <i data-lucide="mouse-pointer-2" class="w-3 h-3"></i>
+                        <span>Drag to pan · Scroll to zoom</span>
+                    </div>
+                </div>
+
+                <!-- Right Control Panel -->
+                <div class="w-80 glass-panel rounded-3xl p-6 flex flex-col gap-6 overflow-y-auto">
+                    
+                    <!-- Panel Header -->
+                    <div class="flex justify-between items-center pb-4 border-b border-white/10">
+                        <h2 class="font-mono text-sm font-bold text-gray-300">PARAMETERS</h2>
+                        <div class="flex gap-2">
+                             <div class="w-2 h-2 rounded-full bg-neon-mint animate-pulse"></div>
+                             <span class="text-[10px] text-neon-mint font-mono">ONLINE</span>
+                        </div>
+                    </div>
+
+                    <!-- Filter Sliders -->
+                    <div class="space-y-6">
+                        <!-- Exposure -->
+                        <div class="group">
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
+                                <span>EXPOSURE</span>
+                                <span class="text-neon-blue font-bold" id="val-exposure">100%</span>
+                            </div>
+                            <input type="range" min="0" max="200" value="100" class="slider" oninput="updateFilter('brightness', this.value, '%', 'val-exposure')">
+                        </div>
+
+                        <!-- Contrast -->
+                        <div class="group">
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
+                                <span>CONTRAST</span>
+                                <span class="text-neon-blue font-bold" id="val-contrast">100%</span>
+                            </div>
+                            <input type="range" min="0" max="200" value="100" class="slider" oninput="updateFilter('contrast', this.value, '%', 'val-contrast')">
+                        </div>
+
+                        <!-- Saturation -->
+                        <div class="group">
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
+                                <span>SATURATION</span>
+                                <span class="text-neon-blue font-bold" id="val-saturate">100%</span>
+                            </div>
+                            <input type="range" min="0" max="200" value="100" class="slider" oninput="updateFilter('saturate', this.value, '%', 'val-saturate')">
+                        </div>
+
+                         <!-- Hue Rotate -->
+                         <div class="group">
+                            <div class="flex justify-between text-xs font-mono text-gray-400 mb-2">
+                                <span>HUE SHIFT</span>
+                                <span class="text-neon-blue font-bold" id="val-hue">0deg</span>
+                            </div>
+                            <input type="range" min="0" max="360" value="0" class="slider" oninput="updateFilter('hue-rotate', this.value, 'deg', 'val-hue')">
+                        </div>
+                    </div>
+
+                    <!-- AI Toggle Features -->
+                    <div class="mt-4 p-4 rounded-xl bg-white/5 border border-white/5 space-y-3">
+                        <h3 class="text-xs font-mono text-gray-500 mb-2">NEURAL FILTERS</h3>
+                        
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-sm text-gray-300 group-hover:text-white transition-colors">Denoise (4x)</span>
+                            <div class="relative">
+                                <input type="checkbox" class="sr-only peer">
+                                <div class="w-9 h-5 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-neon-blue shadow-inner"></div>
+                            </div>
+                        </label>
+
+                        <label class="flex items-center justify-between cursor-pointer group">
+                            <span class="text-sm text-gray-300 group-hover:text-white transition-colors">Edge Detection</span>
+                            <div class="relative">
+                                <input type="checkbox" class="sr-only peer" id="edge-toggle" onchange="toggleEdgeDetection(this)">
+                                <div class="w-9 h-5 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-neon-purple shadow-inner"></div>
+                            </div>
+                        </label>
+                    </div>
+
+                    <!-- Action Button -->
+                    <button class="mt-auto w-full py-4 bg-gradient-to-r from-neon-blue to-neon-purple rounded-xl font-mono font-bold text-black hover:shadow-[0_0_20px_rgba(189,0,255,0.4)] transition-all transform hover:-translate-y-1 active:scale-95 flex items-center justify-center gap-2" onclick="simulateProcess(this)">
+                        <span id="btn-text">EXPORT RESULT</span>
+                        <i data-lucide="arrow-right" class="w-4 h-4" id="btn-icon"></i>
+                    </button>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Scripts for Logic-less Interaction -->
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        const img = document.getElementById('preview-image');
+        const filters = {
+            brightness: '100%',
+            contrast: '100%',
+            saturate: '100%',
+            'hue-rotate': '0deg',
+            grayscale: '0%'
+        };
+
+        // Update Filters Visually
+        function updateFilter(name, value, unit, labelId) {
+            filters[name] = value + unit;
+            document.getElementById(labelId).innerText = value + unit;
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const filterString = Object.entries(filters)
+                .map(([key, val]) => `${key}(${val})`)
+                .join(' ');
+            img.style.filter = filterString;
+        }
+
+        // Toggle Edge Detection (Visual Hack)
+        function toggleEdgeDetection(checkbox) {
+            if (checkbox.checked) {
+                filters.grayscale = '100%';
+                filters.contrast = '150%';
+                // Simulate edge detection look via CSS
+                img.style.mixBlendMode = 'luminosity'; 
+            } else {
+                filters.grayscale = '0%';
+                filters.contrast = document.getElementById('val-contrast').innerText; // revert to slider
+                img.style.mixBlendMode = 'normal';
+            }
+            applyFilters();
+        }
+
+        // Simulate "Processing" Button State
+        function simulateProcess(btn) {
+            const originalText = document.getElementById('btn-text').innerText;
+            const icon = document.getElementById('btn-icon');
+            
+            // Loading State
+            btn.disabled = true;
+            document.getElementById('btn-text').innerText = "INFERENCING...";
+            icon.style.display = 'none';
+            
+            // Add spinner
+            const spinner = document.createElement('div');
+            spinner.className = 'loader-ring';
+            btn.appendChild(spinner);
+            
+            // Revert after 2s
+            setTimeout(() => {
+                btn.removeChild(spinner);
+                icon.style.display = 'block';
+                document.getElementById('btn-text').innerText = "DOWNLOADED";
+                btn.classList.add('bg-neon-mint');
+                btn.disabled = false;
+                
+                setTimeout(() => {
+                    document.getElementById('btn-text').innerText = originalText;
+                    btn.classList.remove('bg-neon-mint');
+                }, 2000);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

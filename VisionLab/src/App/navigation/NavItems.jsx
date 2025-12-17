@@ -1,11 +1,12 @@
+import styles from './nav.module.css'
 function NavItems(props){
 
     return(
-        <div className="nav-item-wrapper">
-            <button className={`nav-btn ${props.btn_color} ${props.active && "active"}`}>
+        <div className={styles.nav_item_wrapper}>
+            <button className={`${styles.nav_btn} ${props.btn_color} ${props.active && styles.active_color}`}>
                 <img src={props.thelogo}/>
             </button>
-            <span className={`tooltip ${props.txt_color}`}>{props.name}</span>
+            <span className={`${styles.tooltip} ${props.txt_color}`}>{props.name}</span>
         </div>
     )
 }

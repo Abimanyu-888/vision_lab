@@ -1,10 +1,10 @@
-.avatar-ring {
+.avatar_ring {
     width: 40px; height: 40px;
     border-radius: 50%;
     background: linear-gradient(to top right, var(--neon-blue), var(--neon-purple));
     padding: 1px;
 }
-.avatar-inner {
+.avatar_inner {
     width: 100%; height: 100%;
     border-radius: 50%;
     background: black;
@@ -13,5 +13,5 @@
     align-items: center;
     justify-content: center;
 }
-.avatar-img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: opacity 0.2s; }
-.avatar-img:hover { opacity: 1; }
+.avatar_img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; transition: opacity 0.2s; }
+.avatar_img:hover { opacity: 1; }
