@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VisionLab</title>
+    <link rel="icon" type="image/svg+xml" href="./VisionLab/src/assets/aperture.svg" />
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@300;500;700&display=swap" rel="stylesheet">
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="./index.css" rel="stylesheet">
+</head>
+<body>
+    <div class="bg-mesh"></div>
+    <div class="app-container">
+        
+        <nav class="sidebar glass-panel">
+            <div class="logo-container">
+                <div class="logo-glow"></div>
+                <i data-lucide="aperture" class="logo-icon" width="32" height="32"></i>
+            </div>
+
+            <div class="nav-group">
+                
+                <div class="nav-item-wrapper"> 
+                    <button class="active nav-btn btn-blue">
+                        <i data-lucide="scan-line" width="24" height="24"></i>
+                    </button>
+                    <span class="tooltip text-neon-blue">OCR Scan</span>
+                </div>
+
+                <div class="nav-item-wrapper">
+                    <div class="active-indicator"></div>
+                    <button class="nav-btn btn-purple">
+                        <i data-lucide="wand-2" width="24" height="24"></i>
+                    </button>
+                    <span class="tooltip text-neon-purple">Magic Filters</span>
+                </div>
+
+                <div class="nav-item-wrapper">
+                    <div class="active-indicator"></div>
+                    <button class="nav-btn btn-mint">
+                        <i data-lucide="layers" width="24" height="24"></i>
+                    </button>
+                        <span class="tooltip text-neon-mint">Spatial Transform</span>
+                </div>
+            </div>
+
+            <button class="settings-btn">
+                <i data-lucide="settings" width="24" height="24"></i>
+            </button>
+        </nav>
+
+        <main class="main-area">
+            
+            <header>
+                <div>
+                    <h1 class="font-mono">
+                        VISION<span class="text-neon-blue">Lab</span>
+                    </h1>
+                    <p class="subtitle font-mono">IMAGE PROCESSING UNIT</p>
+                </div>
+                
+                <div class="header-actions">
+                    <button class="upload-btn">
+                        <i data-lucide="upload-cloud" width="16" height="16" class="text-neon-blue"></i>
+                        <span>Upload Source</span>
+                    </button>
+                    <div class="avatar-ring">
+                        <div class="avatar-inner">
+                            <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=Felix" alt="User" class="avatar-img">
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <div class="workspace">
+                
+                <div class="canvas-container glass-panel" id="canvas-container">
+                    
+                    <div class="canvas-bg-overlay"></div>
+                    <div class="canvas-vignette"></div>
+                    
+                    <div class="image-wrapper" id="main-image-wrapper">
+                         <img 
+                            id="preview-image"
+                            src="https://images.unsplash.com/photo-1535905557558-afc4877a26fc?q=80&w=2574&auto=format&fit=crop" 
+                            alt="Cyberpunk City" 
+                        >
+
+                        <div class="scan-overlay">
+                            <div class="scan-line"></div>
+                        </div>
+
+                        <div class="bounding-box box-mint">
+                            <div class="box-label">0.98</div>
+                        </div>
+                        
+                        <div class="bounding-box box-purple">
+                            <div class="box-label">NEON SIGN</div>
+                        </div>
+                    </div>
+
+                    
+                </div>
+
+                <div class="control-panel glass-panel">
+                    
+                    <div class="panel-header">
+                        <h2 class="panel-title">PARAMETERS</h2>
+                        <div class="flex gap-2 items-center">
+                             <div class="status-dot"></div>
+                             <span class="text-neon-mint font-mono" style="font-size: 10px;">ONLINE</span>
+                        </div>
+                    </div>
+
+                    <div class="sliders-area">
+                        <div class="slider-group">
+                            <div class="slider-label">
+                                <span>EXPOSURE</span>
+                                <span class="slider-val" id="val-exposure">100%</span>
+                            </div>
+                            <input type="range" min="0" max="200" value="100" oninput="updateFilter('brightness', this.value, '%', 'val-exposure')">
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-label">
+                                <span>CONTRAST</span>
+                                <span class="slider-val" id="val-contrast">100%</span>
+                            </div>
+                            <input type="range" min="0" max="200" value="100" oninput="updateFilter('contrast', this.value, '%', 'val-contrast')">
+                        </div>
+
+                        <div class="slider-group">
+                            <div class="slider-label">
+                                <span>SATURATION</span>
+                                <span class="slider-val" id="val-saturate">100%</span>
+                            </div>
+                            <input type="range" min="0" max="200" value="100" oninput="updateFilter('saturate', this.value, '%', 'val-saturate')">
+                        </div>
+
+                         <div class="slider-group">
+                            <div class="slider-label">
+                                <span>HUE SHIFT</span>
+                                <span class="slider-val" id="val-hue">0deg</span>
+                            </div>
+                            <input type="range" min="0" max="360" value="0" oninput="updateFilter('hue-rotate', this.value, 'deg', 'val-hue')">
+                        </div>
+                    </div>
+
+                    <div class="toggles-container">
+                        <h3 class="font-mono" style="font-size: 12px; color: #6b7280; margin-bottom: 4px;">NEURAL FILTERS</h3>
+                        
+                        <label class="toggle-row">
+                            <span>Denoise (4x)</span>
+                            <div class="switch">
+                                <input type="checkbox">
+                                <span class="slider-toggle"></span>
+                            </div>
+                        </label>
+
+                        <label class="toggle-row">
+                            <span>Edge Detection</span>
+                            <div class="switch purple">
+                                <input type="checkbox" id="edge-toggle" onchange="toggleEdgeDetection(this)">
+                                <span class="slider-toggle"></span>
+                            </div>
+                        </label>
+                    </div>
+
+                    <button class="export-btn" onclick="simulateProcess(this)">
+                        <span id="btn-text">EXPORT RESULT</span>
+                        <i data-lucide="arrow-right" width="16" height="16" id="btn-icon"></i>
+                    </button>
+
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        const img = document.getElementById('preview-image');
+        const filters = {
+            brightness: '100%',
+            contrast: '100%',
+            saturate: '100%',
+            'hue-rotate': '0deg',
+            grayscale: '0%'
+        };
+
+        // Update Filters Visually
+        function updateFilter(name, value, unit, labelId) {
+            filters[name] = value + unit;
+            document.getElementById(labelId).innerText = value + unit;
+            applyFilters();
+        }
+
+        function applyFilters() {
+            const filterString = Object.entries(filters)
+                .map(([key, val]) => `${key}(${val})`)
+                .join(' ');
+            img.style.filter = filterString;
+        }
+
+        // Toggle Edge Detection (Visual Hack)
+        function toggleEdgeDetection(checkbox) {
+            if (checkbox.checked) {
+                filters.grayscale = '100%';
+                filters.contrast = '150%';
+                // Simulate edge detection look via CSS
+                img.style.mixBlendMode = 'luminosity'; 
+            } else {
+                filters.grayscale = '0%';
+                filters.contrast = document.getElementById('val-contrast').innerText; // revert to slider
+                img.style.mixBlendMode = 'normal';
+            }
+            applyFilters();
+        }
+
+        // Simulate "Processing" Button State
+        function simulateProcess(btn) {
+            const originalText = document.getElementById('btn-text').innerText;
+            const icon = document.getElementById('btn-icon');
+            
+            // Loading State
+            btn.disabled = true;
+            document.getElementById('btn-text').innerText = "INFERENCING...";
+            icon.style.display = 'none';
+            
+            // Add spinner
+            const spinner = document.createElement('div');
+            spinner.className = 'loader-ring';
+            btn.appendChild(spinner);
+            
+            // Revert after 2s
+            setTimeout(() => {
+                btn.removeChild(spinner);
+                icon.style.display = 'block';
+                document.getElementById('btn-text').innerText = "DOWNLOADED";
+                btn.classList.add('bg-neon-mint');
+                btn.disabled = false;
+                
+                setTimeout(() => {
+                    document.getElementById('btn-text').innerText = originalText;
+                    btn.classList.remove('bg-neon-mint');
+                }, 2000);
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

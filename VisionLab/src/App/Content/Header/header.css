@@ -1,0 +1,15 @@
+header {
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2rem;
+    z-index: 10;
+}
+h1 { font-size: 1.5rem; font-weight: 700; letter-spacing: -0.025em; display: flex; align-items: center; gap: 0.5rem; }
+.text-neon-blue { color: var(--neon-blue); }
+.subtitle { font-size: 0.75rem; color: #6b7280; letter-spacing: 0.1em; margin-top: 4px; }
+.header-actions { display: flex; align-items: center; gap: 1rem; }
+
+
+

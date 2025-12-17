@@ -1,0 +1,17 @@
+.upload-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.upload-btn:hover { background: rgba(255, 255, 255, 0.1); border-color: rgba(0, 240, 255, 0.5); }
+.upload-btn:hover i { animation: bounce 1s infinite; }
+.text-neon-blue { color: var(--neon-blue); }
