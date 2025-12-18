@@ -1,8 +1,11 @@
 import styles from './header.module.css'
 
-import Login_btn from './login_btn/login_btn.jsx';
+import Btn from './btn/btn.jsx';
 import ProfileBtn from './profile_btn/ProfileBtn.jsx';
+import UploadCloud from '/src/assets/cloud-upload.svg'
+import logIn from '/src/assets/log-in.svg'
 function Header(){
+    const Logged=false
     return(
         <div className={styles.app_header}>
             <div>
@@ -13,8 +16,9 @@ function Header(){
             </div>
 
             <div className={styles.header_actions}>
-                <Login_btn/>
-                <ProfileBtn/>
+                <Btn logo={UploadCloud} info="Upload Source"/>
+                {Logged? <ProfileBtn/> :<Btn logo={logIn} info="LogIn"/>}
+                
             </div>
         </div>
     )
