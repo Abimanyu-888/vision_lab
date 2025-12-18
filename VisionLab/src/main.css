@@ -9,22 +9,18 @@
 
 .font-mono { font-family: var(--font-mono); }
 .hidden { display: none; }
-
-/* Custom Scrollbar */
-::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: var(--bg-deep); }
-::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: var(--neon-blue); }
 :root {
     --bg-deep: #05050A;
     --text-main: #ffffff;
     --text-muted: #9ca3af;
+    --text-dark: #6b7280; 
     
     /* Neon Colors */
     --neon-blue: #00F0FF;
     --neon-purple: #BD00FF;
     --neon-mint: #00FF94;
     --neon-pink: #FF0055;
+    --neon-teal: #14b8a6;
 
     /* Glass Effect Variables */
     --glass-bg: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
@@ -34,6 +30,8 @@
     /* Fonts */
     --font-sans: 'Inter', sans-serif;
     --font-mono: 'Space Grotesk', monospace;
+    --grad-blue-purple: linear-gradient(to right, var(--neon-blue), var(--neon-purple));
+    --grad-mint-teal: linear-gradient(to right, var(--neon-mint), var(--neon-teal));
 }
 
 * {

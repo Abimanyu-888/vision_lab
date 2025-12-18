@@ -5,10 +5,11 @@ import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './main.css'
 
 import App from './App/App.jsx'
-import SignIn from './SignIn/SignIn.jsx'
+import SignIn from './Authenticate/Authenticate.jsx'
 
 const router=createBrowserRouter([
-  {path:"/",element:<SignIn/>}
+  {path:"/",element:<App/>},
+  {path:"/login",element:<SignIn/>}
 ])
 
 
