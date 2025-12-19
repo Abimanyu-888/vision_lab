@@ -4,8 +4,21 @@ import SignUp from './SignUp/SignUp.jsx'
 import google_logo from '/src/assets/google.svg'
 import github_logo from '/src/assets/github.svg'
 import { useState } from 'react'
+import { useAuth } from '../../../auth_context.jsx'
+import { useNavigate } from 'react-router-dom'
 function Credentials(){
     const [isSignIn,setSignIn]=useState(true)
+    const { googleSignIn } = useAuth()
+    const navigate = useNavigate()
+
+    async function handleGoogleSignIn() {
+        try {
+            await googleSignIn()
+            navigate('/')
+        } catch (error) {
+            console.error("Google Sign In Failed", error)
+        }
+    }
     return(
         <div className={styles.glass_panel}>
             <div className={styles.glass_glow_top}></div>
@@ -48,7 +61,7 @@ function Credentials(){
                     <img src={github_logo}/>
                     <span>GITHUB</span>
                 </button>
-                <button className={styles.social_btn}>
+                <button className={styles.social_btn} onClick={handleGoogleSignIn} type="button">
                     <img src={google_logo}/>
                     <span>GOOGLE</span>
                 </button>
