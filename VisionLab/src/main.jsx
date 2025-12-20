@@ -7,6 +7,8 @@ import App from './App/App.jsx'
 import SignIn from './Authenticate/Authenticate.jsx'
 import { AuthProvider } from './auth_context.jsx'
 
+import { ImageProvider } from './image_context.jsx'
+
 const router = createBrowserRouter([
   { path: "/", element: <App/> },
   { path: "/login", element: <SignIn/> }
@@ -15,7 +17,9 @@ const router = createBrowserRouter([
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <AuthProvider>
-      <RouterProvider router={router}/>
+      <ImageProvider>
+        <RouterProvider router={router}/>
+      </ImageProvider>
     </AuthProvider>
   </StrictMode>,
 )
