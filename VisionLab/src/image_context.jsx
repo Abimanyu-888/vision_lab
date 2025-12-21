@@ -1,4 +1,5 @@
 import React,{createContext,useContext,useState} from "react";
+import defaultImageImport from '/public/download.jpeg';
 
 const ImageContext=createContext()
 
@@ -7,10 +8,10 @@ export function useImage(){
 }
 
 export function ImageProvider({children}){
-    const [uploadImg,setUploadImg]=useState(null)
+    const [uploadedImg,setUploadImg]=useState(defaultImageImport)
 
     return (
-        <ImageContext.Provider value={{uploadImg,setUploadImg}}>
+        <ImageContext.Provider value={{uploadedImg,setUploadImg}}>
             {children}
         </ImageContext.Provider>
     )
