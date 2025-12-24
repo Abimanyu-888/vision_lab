@@ -84,7 +84,7 @@ class image{
             std::cerr << "Error: Failed to write JPEG file." << std::endl;
         }
     }
-    std::vector<std::vector<RGB>> mean_blur_rgb(
+    std::vector<std::vector<RGB>> mean_blur(
         const std::vector<std::vector<RGB>>& img, int k)
     {
         int n = img.size();
@@ -122,12 +122,62 @@ class image{
         return out;
     }
 
+    std::vector<std::vector<RGB>> gaussian_blur(const std::vector<std::vector<RGB>>& img,int k){
+        if(k%2==0 || k<2) return {};
+        int n=img.size();
+        if(!n) return {};
+        int m=img[0].size();
+        if(!m) return {};
+        std::vector<std::vector<RGB>> out(n,std::vector<RGB>(m));
+        std::vector<double> kernal(k/2+1);
+        double sigma=std::max(0.5,k/6.0);
+        kernal[0]=1;
+        double normalize=1.0;
+        for(int i=1;i<k/2+1;i++){
+            double temp=(i*i)/(2*sigma*sigma);
+            kernal[i]=std::exp(-temp);
+            normalize+=kernal[i]*2;
+        }
+        for(int i=0;i<k/2+1;i++) kernal[i]/=normalize;
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                double sum_r=0.0,sum_g=0.0,sum_b=0.0;
+                int r1=std::max(j-k/2,0);
+                int r2=std::min(m,j+k/2+1);
+                for(int x=r1;x<r2;x++){
+                    sum_r+=img[i][x].r*kernal[std::abs(x-j)];
+                    sum_g+=img[i][x].g*kernal[std::abs(x-j)];
+                    sum_b+=img[i][x].b*kernal[std::abs(x-j)];
+                }
+                out[i][j].r=sum_r;
+                out[i][j].g=sum_g;
+                out[i][j].b=sum_b;
+            }
+        }
+        for(int i=0;i<n;i++){
+            for(int j=0;j<m;j++){
+                double sum_r=0,sum_g=0,sum_b=0;
+                int r1=std::max(i-k/2,0);
+                int r2=std::min(n,i+k/2+1);
+                for(int x=r1;x<r2;x++){
+                    sum_r+=out[x][j].r*kernal[std::abs(x-i)];
+                    sum_g+=out[x][j].g*kernal[std::abs(x-i)];
+                    sum_b+=out[x][j].b*kernal[std::abs(x-i)];
+                }
+                out[i][j].r=std::clamp(sum_r,0.0,255.0);
+                out[i][j].g=std::clamp(sum_g,0.0,255.0);
+                out[i][j].b=std::clamp(sum_b,0.0,255.0);
+
+            }
+        }
+        return out;
+    }
 
     std::vector<std::vector<RGB>> image_vec;
 
 public:
     image(const std::string inputfileName){
-        image_vec=load_into_vec_rgb(inputfileName);
+        image_vec=load_into_vec(inputfileName);
     }
     void apply_blur(int k){
         image_vec=mean_blur_rgb(image_vec,21);

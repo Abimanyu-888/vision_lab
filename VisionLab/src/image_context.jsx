@@ -1,5 +1,5 @@
 import React,{createContext,useContext,useState} from "react";
-import defaultImageImport from '/public/download.jpeg';
+import defaultImageImport from '/src/assets/download.jpeg';
 
 const ImageContext=createContext()
 
