@@ -1,14 +1,8 @@
-import styles from './Recognize_num.module.css'
+import Slider from "../Slider/Slider"
 function RecognizeNum(){
     return(
     <>
-        <div className={styles.slider_group}>
-            <div className={styles.slider_label}>
-                <span>Confidence Threshold</span>
-                <span className={styles.slider_val} >-1</span>
-            </div>
-            <input type="range" min="1" max="51" step="2" />
-        </div>
+        <Slider label="Confidence Threshold" onCommit={()=>{return 0}} />
 
     </>
     )

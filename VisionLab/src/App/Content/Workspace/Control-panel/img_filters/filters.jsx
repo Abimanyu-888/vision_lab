@@ -1,6 +1,7 @@
-import styles from './filters.module.css'
+
 import { useState } from 'react'
 import { useImage } from '../../../../../image_context'
+import Slider from '../Slider/Slider'
 function Filters(props){
     const [blurval,setBlurval]=useState(1)
     const [binary,setBinary]=useState(-1)
@@ -47,85 +48,21 @@ function Filters(props){
             props.setProcessing(false);
         }
     }
-
-    const handleSlider=(e)=>{
-        setBlurval(e.target.value)
-    }
-    const handleSliderCommit=()=>{
-        handleProcess(blurval)
+    const handleSliderCommit=(e)=>{
+        handleProcess(e.target.value)
     }
     return(
     <>
-        <div className={styles.slider_group}>
-            <div className={styles.slider_label}>
-                <span>Blur</span>
-                <span className={styles.slider_val} >{blurval}</span>
-            </div>
-            <input type="range" min="1" max="51" step="2" defaultValue={blurval} onChange={handleSlider} onMouseUp={handleSliderCommit}/>
-        </div>
-        <div className={styles.slider_group}>
-            <div className={styles.slider_label}>
-                <span>Binarization</span>
-                <span className={styles.slider_val} >{binary}</span>
-            </div>
-            <input type="range" min="1" max="51" step="2" defaultValue={blurval} onChange={handleSlider} onMouseUp={handleSliderCommit}/>
-        </div>
-        <div className={styles.slider_group}>
-            <div className={styles.slider_label}>
-                <span>Gamma Correction</span>
-                <span className={styles.slider_val} >{binary}</span>
-            </div>
-            <input type="range" min="1" max="51" step="2" defaultValue={blurval} onChange={handleSlider} onMouseUp={handleSliderCommit}/>
-        </div>
-        <div className={styles.slider_group}>
-            <div className={styles.slider_label}>
-                <span>Histogram Equalization</span>
-                <span className={styles.slider_val} >{binary}</span>
-            </div>
-            <input type="range" min="1" max="51" step="2" defaultValue={blurval} onChange={handleSlider} onMouseUp={handleSliderCommit}/>
-        </div>
-        <div className={styles.slider_group}>
-            <div className={styles.slider_label}>
-                <span>Gaussian Blur</span>
-                <span className={styles.slider_val} >{binary}</span>
-            </div>
-            <input type="range" min="1" max="51" step="2" defaultValue={blurval} onChange={handleSlider} onMouseUp={handleSliderCommit}/>
-        </div>
-        <div className={styles.slider_group}>
-            <div className={styles.slider_label}>
-                <span>Canny Edge Detection</span>
-                <span className={styles.slider_val} >{binary}</span>
-            </div>
-            <input type="range" min="1" max="51" step="2" defaultValue={blurval} onChange={handleSlider} onMouseUp={handleSliderCommit}/>
-        </div>
-        <div className={styles.slider_group}>
-            <div className={styles.slider_label}>
-                <span>Laplacian</span>
-                <span className={styles.slider_val} >{binary}</span>
-            </div>
-            <input type="range" min="1" max="51" step="2" defaultValue={blurval} onChange={handleSlider} onMouseUp={handleSliderCommit}/>
-        </div>
-        <div className={styles.slider_group}>
-            <div className={styles.slider_label}>
-                <span>Sharpening (Unsharp Masking)</span>
-                <span className={styles.slider_val} >{binary}</span>
-            </div>
-            <input type="range" min="1" max="51" step="2" defaultValue={blurval} onChange={handleSlider} onMouseUp={handleSliderCommit}/>
-        </div>
-        <div className={styles.slider_group}>
-            <div className={styles.slider_label}>
-                <span>Gaussian Noise</span>
-                <span className={styles.slider_val} >{binary}</span>
-            </div>
-            <input type="range" min="1" max="51" step="2" defaultValue={blurval} onChange={handleSlider} onMouseUp={handleSliderCommit}/>
-        </div>
-        <div className={styles.slider_group}>
-            <div className={styles.slider_label}>
-                <span>Salt-and-Pepper</span>
-                <span className={styles.slider_val} >{binary}</span>
-            </div>
-            <input type="range" min="1" max="51" step="2" defaultValue={blurval} onChange={handleSlider} onMouseUp={handleSliderCommit}/>
-        </div>
+        <Slider label="Blur" onCommit={handleSliderCommit} />
+        <Slider label="Binarization" onCommit={()=>{return 0}} />
+        <Slider label="Gamma Correction" onCommit={()=>{return 0}} />
+        <Slider label="Histogram Equalization" onCommit={()=>{return 0}} />
+        <Slider label="Gaussian Blur" onCommit={()=>{return 0}} />
+        <Slider label="Canny Edge Detection" onCommit={()=>{return 0}} />
+        <Slider label="Laplacian" onCommit={()=>{return 0}} />
+        <Slider label="Sharpening (Unsharp Masking)" onCommit={()=>{return 0}} />
+        <Slider label="Gaussian Noise" onCommit={()=>{return 0}} />
+        <Slider label="Salt-and-Pepper" onCommit={()=>{return 0}} />
 
 
     </>
