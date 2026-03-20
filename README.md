@@ -62,5 +62,5 @@ High-performance image processing using C++ compiled to WebAssembly.
 
 ### 1. Clone the Repository
 ```bash
-git clone <your-repo-link>
+git clone https://github.com/Abimanyu-888/vision_lab.git
 cd VisionLab
