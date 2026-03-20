@@ -60,7 +60,8 @@ High-performance image processing using C++ compiled to WebAssembly.
 
 ## 📦 Installation & Setup
 
-### 1. Clone the Repository
 ```bash
 git clone https://github.com/Abimanyu-888/vision_lab.git
 cd VisionLab
+npm install
+npm run dev
