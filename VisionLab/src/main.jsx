@@ -9,10 +9,12 @@ import { AuthProvider } from './auth_context.jsx'
 
 import { ImageProvider } from './image_context.jsx'
 import { FeatureProvider } from './feature_contest.jsx'
+import Profile from './Profile/Profile.jsx'
 
 const router = createBrowserRouter([
   { path: "/", element: <App/> },
-  { path: "/login", element: <SignIn/> }
+  { path: "/login", element: <SignIn/> },
+  { path:"/profile", element:<Profile/>}
 ])
 
 createRoot(document.getElementById('root')).render(

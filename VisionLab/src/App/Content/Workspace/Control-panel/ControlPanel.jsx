@@ -17,12 +17,12 @@ function ControlPanel(){
     useEffect(()=>{
         const loadWasm=async () =>{
             try{
-                if(!document.querySelector('script[src="/wasm/blur.js"]')){
+                if(!document.querySelector('script[src="/wasm/module.js"]')){
                     const script=document.createElement('script')
-                    script.src='/wasm/blur.js'
+                    script.src='/wasm/module.js'
                     script.async=true
                     script.onerror = () => {
-                        console.error("CRITICAL: Failed to load /wasm/blur.js. Check if file exists in public/wasm folder.");
+                        console.error("CRITICAL: Failed to load /wasm/module.js. Check if file exists in public/wasm folder.");
                     };
                     script.onload = async ()=>{
                         if(window.createBlurModule){
