@@ -13,7 +13,21 @@ function Credentials(){
 
     async function handleGoogleSignIn() {
         try {
-            await googleSignIn()
+            const userCredentials=await googleSignIn()
+            console.log(userCredentials)
+            const {displayName,email,uid} = userCredentials.user
+            const response = await fetch("http://localhost:3000/api/user",{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({
+                    firebaseUID:uid,
+                    name:displayName,
+                    email:email
+                })
+            })
+            if(!response.ok){
+                throw new Error("Failed to save new user")
+            }
             navigate('/')
         } catch (error) {
             console.error("Google Sign In Failed", error)

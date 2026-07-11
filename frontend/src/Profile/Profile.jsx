@@ -3,19 +3,34 @@ import user from '../assets/user.svg'
 import camera from '../assets/camera.svg'
 import history from '../assets/history.svg'
 import download from '../assets/download.svg'
+import { useNavigate,Link } from 'react-router-dom';
+import { signOut } from "firebase/auth"
+import { auth } from "../firebase_config"
 import './Profile.css'
+import { useAuth } from '../auth_context'
 
 function Profile() {
-
+    const navigate=useNavigate();
+    async function handleSighOut(){
+        try{
+            await signOut(auth);
+            console.log("Sign out successfully")
+            navigate('/')
+        }
+        catch(error){
+            console.error(error);
+        }
+    }
+    const { currentUser }=useAuth();
     return (
         <div className="main-wrapper">
             <div className="bg-mesh"></div>
 
             <header>
                 <div className="flex items-center gap-6">
-                    <a href="VisionLab_UI.html" className="back-btn" title="Back to Lab">
+                    <Link href="VisionLab_UI.html" className="back-btn" title="Back to Lab" onClick={()=>{navigate('/')}}>
                         <img src={arrow} width="24" height="24"/>
-                    </a>
+                    </Link>
 
                     <div className="divider-v"></div>
 
@@ -57,16 +72,12 @@ function Profile() {
                             <div className="form-grid">
                                 <div>
                                     <label className="label">DISPLAY NAME</label>
-                                    <input type="text" defaultValue="Ada Lovelace" className="glass-input" />
-                                </div>
-                                <div>
-                                    <label className="label">USERNAME</label>
-                                    <input type="text" defaultValue="@ada_vision" className="glass-input" style={{ color: 'white' }} placeholder="Set username" />
+                                    <input type="text" value={currentUser.displayName} className="glass-input" disabled/>
                                 </div>
                             </div>
                             <div>
                                 <label className="label">EMAIL ADDRESS</label>
-                                <input type="email" defaultValue="ada@vision-lab.ai" className="glass-input" />
+                                <input type="email" value={currentUser.email} className="glass-input" disabled/>
                             </div>
                         </div>
                     </div>
@@ -122,11 +133,11 @@ function Profile() {
                 {/* --- Danger Zone --- */}
                 <section className="danger-zone">
                     <div>
-                        <h2 className="font-mono font-bold text-lg text-neon-red mb-1">Danger Zone</h2>
-                        <p className="text-xs text-gray-400">Once you delete your repository, there is no going back.</p>
+                        <h2 className="font-mono font-bold text-lg text-neon-red mb-1">END SESSION</h2>
+                        <p className="text-xs text-gray-400">Save Changes before Loging out</p>
                     </div>
-                    <button className="delete-btn">
-                        DELETE ACCOUNT
+                    <button className="delete-btn" onClick={handleSighOut}>
+                        LOG OUT
                     </button>
                 </section>
 

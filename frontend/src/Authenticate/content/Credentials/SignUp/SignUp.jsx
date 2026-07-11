@@ -5,6 +5,7 @@ import { useAuth } from '../../../../auth_context'
 import { useNavigate } from 'react-router-dom'
 
 function SignUp({ isActive }) {
+    const [name,setName ] = useState('')
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [error, setError] = useState('')
@@ -17,7 +18,20 @@ function SignUp({ isActive }) {
         e.preventDefault()
         try {
             setError('')
-            await signup(email, password)
+            const userCredentials=await signup(email, password)
+            const uid=userCredentials.user.uid
+            const response = await fetch("http://localhost:3000/api/user",{
+                method:"POST",
+                headers:{"Content-Type":"application/json"},
+                body:JSON.stringify({
+                    firebaseUID:uid,
+                    name:name,
+                    email:email
+                })
+            })
+            if(!response.ok){
+                throw new Error("Failed to save new user")
+            }
             navigate('/') // Redirect to dashboard after signup
         } catch (err) {
             setError('Failed to create an account: ' + err.message)
@@ -31,13 +45,15 @@ function SignUp({ isActive }) {
             {/* ... First Name / Last Name inputs (You can store these in Firestore later) ... */}
              <div className={styles.input_row}>
                 <div className={styles.input_group}>
-                    <label className={styles.label}>First Name</label>
-                    <input className={`${styles.value} ${styles.padd}`} type="text" placeholder="Ada" /> 
+                    <label className={styles.label}>Name</label>
+                    <input 
+                        className={`${styles.value} ${styles.padd}`} 
+                        type="text" 
+                        placeholder="Abimanyu" 
+                        onChange={(e)=>setName(e.target.value)}
+                        required/> 
                 </div>
-                <div className={styles.input_group}>
-                    <label className={styles.label}>Last Name</label>
-                    <input className={`${styles.value} ${styles.padd}`} type="text" placeholder="Lovelace" />
-                </div>
+
             </div>
 
             <div className={styles.input_group}>

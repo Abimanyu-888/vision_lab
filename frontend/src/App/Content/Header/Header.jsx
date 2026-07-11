@@ -6,7 +6,7 @@ import { useAuth } from '../../../auth_context.jsx';
 import UploadBtn from './UploadBtn/Uploadbtn.jsx';
 
 function Header() {
-    const { currentUser} = useAuth(); // Get real state
+    const { currentUser } = useAuth(); // Get real state
 
     return (
         <div className={styles.app_header}>
