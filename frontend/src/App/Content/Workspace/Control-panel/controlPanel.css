@@ -8,14 +8,15 @@
     overflow: hidden; 
     height: 100%;
 }
+
 .sliders-area {
     flex: 1;           /* Pushes the toggles/buttons down and fills space */
     overflow-y: auto;  /* Enables scroll only for this section */
     min-height: 0;     /* Critical fix for nested flex scrolling */
-    
     padding: 0.5rem 1.5rem; /* Adds space for the glow effect on sides */
     margin: 0 -1rem;
 }
+
 .sliders-area::-webkit-scrollbar {
     width: 4px;
 }
@@ -38,63 +39,74 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     flex-shrink: 0;
 }
-.panel-title { font-family: var(--font-mono); font-size: 0.875rem; font-weight: bold; color: #d1d5db; }
-.status-dot { width: 8px; height: 8px; background: var(--neon-mint); border-radius: 50%; animation: pulse 2s infinite; }
 
+.panel-title {
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: bold;
+    color: #d1d5db;
+}
 
+.status-dot {
+    width: 8px;
+    height: 8px;
+    background: var(--neon-mint);
+    border-radius: 50%;
+    animation: pulse 2s infinite;
+}
 
-/* Toggles */
-.toggles-container {
-    padding: 1rem;
-    border-radius: 0.75rem;
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.05);
+/* --- REPLACED TOGGLES WITH HISTORY (UNDO/REDO) CONTROLS --- */
+.history-controls {
     display: flex;
-    flex-direction: column;
     gap: 0.75rem;
     flex-shrink: 0;
 }
-.toggle-row {
+
+.history-btn {
+    flex: 1;
+    padding: 0.75rem;
+    border-radius: 0.75rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    font-weight: 600;
     display: flex;
     align-items: center;
-    justify-content: space-between;
-    cursor: pointer;
+    justify-content: center;
+    gap: 0.5rem;
+    transition: all 0.2s;
 }
-.toggle-row span { font-size: 0.875rem; color: #d1d5db; transition: color 0.2s; }
-.toggle-row:hover span { color: white; }
 
-/* Custom Checkbox Toggle */
-.switch {
-    position: relative;
-    width: 36px;
-    height: 20px;
-}
-.switch input { opacity: 0; width: 0; height: 0; }
-.slider-toggle {
-    position: absolute;
+.history-btn.undo {
+    background: rgba(0, 240, 255, 0.1);
+    border: 1px solid rgba(0, 240, 255, 0.4);
+    color: #fff;
     cursor: pointer;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background-color: #374151;
-    transition: .4s;
-    border-radius: 34px;
-    box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
 }
-.slider-toggle:before {
-    position: absolute;
-    content: "";
-    height: 16px;
-    width: 16px;
-    left: 2px;
-    bottom: 2px;
-    background-color: white;
-    transition: .4s;
-    border-radius: 50%;
+
+.history-btn.undo:hover {
+    background: rgba(0, 240, 255, 0.2);
+    box-shadow: 0 0 12px rgba(0, 240, 255, 0.3);
 }
-/* Blue Toggle State */
-.switch input:checked + .slider-toggle { background-color: var(--neon-blue); }
-.switch input:checked + .slider-toggle:before { transform: translateX(16px); }
-/* Purple Toggle State (Custom class for Edge Detection) */
-.switch.purple input:checked + .slider-toggle { background-color: var(--neon-purple); }
+
+.history-btn.redo {
+    background: rgba(189, 0, 255, 0.1);
+    border: 1px solid rgba(189, 0, 255, 0.4);
+    color: #fff;
+    cursor: pointer;
+}
+
+.history-btn.redo:hover {
+    background: rgba(189, 0, 255, 0.2);
+    box-shadow: 0 0 12px rgba(189, 0, 255, 0.3);
+}
+
+.history-btn:disabled {
+    background: rgba(255, 255, 255, 0.02) !important;
+    border: 1px solid rgba(255, 255, 255, 0.05) !important;
+    color: #4b5563 !important;
+    cursor: not-allowed !important;
+    box-shadow: none !important;
+}
 
 /* Export Button */
 .export-btn {
@@ -113,13 +125,19 @@
     gap: 0.5rem;
     transition: all 0.3s;
 }
+
 .export-btn:hover {
     box-shadow: 0 0 20px rgba(189,0,255,0.4);
     transform: translateY(-4px);
 }
-.export-btn:active { transform: scale(0.95); }
+.export-btn:active {
+    transform: scale(0.95);
+}
 
-.bg-neon-mint { background: var(--neon-mint) !important; }
+.bg-neon-mint {
+    background: var(--neon-mint) !important;
+}
+
 .glass_panel {
     background: var(--glass-bg);
     backdrop-filter: blur(20px);

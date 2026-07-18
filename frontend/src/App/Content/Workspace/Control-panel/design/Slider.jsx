@@ -1,8 +1,16 @@
 import { useState } from 'react'
 import styles from './Slider.module.css'
 
-function Slider({label, onCommit}){
-    const [value, setValue] = useState(1)
+function Slider({
+    label, 
+    onCommit, 
+    min = 0, 
+    max = 100, 
+    step = 1, 
+    defaultValue = 50, 
+    hasSlider = true 
+}){
+    const [value, setValue] = useState(defaultValue)
     const [isActive, setIsActive] = useState(false)
 
     const handleSlider = (e) => {
@@ -10,17 +18,20 @@ function Slider({label, onCommit}){
     }
     
     const toggleActive = () => {
+        if (!hasSlider) {
+            onCommit()
+            return
+        }
         setIsActive(!isActive)
     }
 
     return(
         <div className={styles.slider_group}>
-            
             <div className={styles.header_row}>
                 <span className={styles.label_text}>{label}</span>
                 
                 <div className={styles.controls_wrapper}>
-                    {isActive && <span className={styles.slider_val}>{value}</span>}
+                    {isActive && hasSlider && <span className={styles.slider_val}>{value}</span>}
                     <button 
                         className={styles.activation_btn} 
                         onClick={toggleActive}
@@ -30,13 +41,14 @@ function Slider({label, onCommit}){
                     </button>
                 </div>
             </div>
-            {isActive && (
+            
+            {isActive && hasSlider && (
                 <div className={styles.slider_container}>
                     <input 
                         type="range" 
-                        min="1" 
-                        max="51" 
-                        step="2" 
+                        min={min} 
+                        max={max} 
+                        step={step} 
                         value={value} 
                         onChange={handleSlider} 
                         onMouseUp={onCommit}
