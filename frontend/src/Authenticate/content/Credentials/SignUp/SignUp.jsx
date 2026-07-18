@@ -3,6 +3,7 @@ import styles from './SignUp.module.css'
 import { useState } from 'react'
 import { useAuth } from '../../../../auth_context'
 import { useNavigate } from 'react-router-dom'
+import { updateProfile } from 'firebase/auth'
 
 function SignUp({ isActive }) {
     const [name,setName ] = useState('')
@@ -19,16 +20,21 @@ function SignUp({ isActive }) {
         try {
             setError('')
             const userCredentials=await signup(email, password)
-            const uid=userCredentials.user.uid
-            const response = await fetch("http://localhost:3000/api/user",{
-                method:"POST",
-                headers:{"Content-Type":"application/json"},
-                body:JSON.stringify({
-                    firebaseUID:uid,
-                    name:name,
-                    email:email
-                })
-            })
+
+            await updateProfile(userCredentials.user, { 
+                displayName: name,
+                photoURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqLOxRW9wIvJfJHNtxsSBRGG7drOdLd5NwKKAbnii5FA&s=10"
+            });
+            await updateProfile(userCredentials.user, {photoURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqLOxRW9wIvJfJHNtxsSBRGG7drOdLd5NwKKAbnii5FA&s=10",});
+
+            const idToken = await userCredentials.user.getIdToken(true);
+            const response = await fetch("http://localhost:3000/api/auth/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${idToken}`
+                }
+            });
             if(!response.ok){
                 throw new Error("Failed to save new user")
             }

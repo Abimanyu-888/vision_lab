@@ -1,6 +1,9 @@
 import styles from './profilebtn.module.css'
 import { useNavigate } from 'react-router-dom'
+import { useAuth } from '../../../../auth_context';
+
 function ProfileBtn(){
+    const { currentUser }=useAuth();
     const navigate =useNavigate()
     const handleClick=()=>{
         navigate('/profile')
@@ -8,7 +11,7 @@ function ProfileBtn(){
     return(
         <div className={styles.avatar_ring}>
             <div className={styles.avatar_inner}>
-                <img src="https://api.dicebear.com/9.x/avataaars/svg?seed=Felix" alt="User" className={styles.avatar_img} onClick={handleClick}/>
+                <img src={currentUser.photoURL} className={styles.avatar_img} onClick={handleClick}/>
             </div>
         </div>
     )

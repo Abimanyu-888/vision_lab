@@ -17,9 +17,21 @@ function SignIn({ isActive }) {
         e.preventDefault()
         try {
             setError('')
-            await login(email, password)
+            const userCredentials = await login(email, password)
+            const idToken = await userCredentials.user.getIdToken()
+            const response = await fetch("http://localhost:3000/api/auth/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${idToken}`
+                }
+            })
+            if (!response.ok) {
+                throw new Error("Backend authentication failed")
+            }
             navigate('/')
-        } catch (err) {
+        } 
+        catch (err){
             setError('Failed to sign in: ' + err.message)
         }
     }

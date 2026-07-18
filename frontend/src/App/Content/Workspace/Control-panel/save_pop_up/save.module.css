@@ -1,0 +1,116 @@
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgb(0, 0, 0,0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    animation: fadeIn 0.2s ease-out;
+}
+
+.modal_panel {
+    width: 100%;
+    max-width: 400px;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 20px 50px -12px rgba(0, 0, 0, 0.8);
+    border-radius: 1rem;
+    padding: 2rem;
+}
+
+.title {
+    font-family: var(--font-mono);
+    color: var(--neon-blue);
+    margin-bottom: 1.5rem;
+    font-size: 1.25rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+}
+
+.form_layout {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.label {
+    display: block;
+    font-size: 0.75rem;
+    font-family: var(--font-mono);
+    color: #9ca3af;
+    margin-bottom: 0.5rem;
+}
+
+.glass_input {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    border-radius: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.glass_input:focus {
+    border-color: var(--neon-blue);
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.1);
+    outline: none;
+}
+
+.btn_group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+
+.cancel_btn {
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: #9ca3af;
+    border-radius: 0.5rem;
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cancel_btn:hover {
+    color: white;
+    border-color: white;
+}
+
+.save_btn {
+    padding: 0.5rem 1.5rem;
+    background: var(--neon-blue);
+    color: black;
+    border: none;
+    border-radius: 0.5rem;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 0.75rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    box-shadow: 0 0 10px rgba(0,240,255,0.2);
+}
+
+.save_btn:hover:not(:disabled) {
+    background: white;
+    box-shadow: 0 0 20px rgba(0,240,255,0.4);
+}
+
+.save_btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}

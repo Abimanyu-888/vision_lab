@@ -6,12 +6,14 @@ import SpacialTransfo from './Spacial_Transfo/SpacialTransfo'
 import RecognizeNum from './Recognize_num/RecognizeNum'
 import { useFeature } from '../../../../feature_contest'
 import { useImage } from '../../../../image_context'
+import SavePopup from './save_pop_up/save'
 
 function ControlPanel() {
     const { currentFeature } = useFeature();
     const { undo, redo, canUndo, canRedo } = useImage();
     const [wasmModule, setWasmModule] = useState(null);
     const [isprocessing, setIsProcessing] = useState(null);
+    const [isSavePopupOpen, setIsSavePopupOpen] = useState(false);
 
     useEffect(() => {
         const loadWasm = async () => {
@@ -77,11 +79,18 @@ function ControlPanel() {
                     <span>Redo ↪</span>
                 </button>
             </div>
-
-            <button className="export-btn">
-                <span id="btn-text">{isprocessing ? "PROCESSING..." : "EXPORT RESULT"}</span>
+            <button className="export-btn"onClick={() => setIsSavePopupOpen(true)}>
+                <span id="btn-text">{isprocessing ? "PROCESSING..." : "SAVE"}</span>
                 <img src={arrow} alt="export" />
             </button>
+            <button className="export-btn">
+                <span id="btn-text">{isprocessing ? "PROCESSING..." : "DOWNLOAD"}</span>
+                <img src={arrow} alt="export" />
+            </button>
+            <SavePopup 
+                isOpen={isSavePopupOpen} 
+                onClose={() => setIsSavePopupOpen(false)} 
+            />
         </div>
     );
 }

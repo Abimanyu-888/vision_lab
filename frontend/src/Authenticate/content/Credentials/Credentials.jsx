@@ -14,22 +14,20 @@ function Credentials(){
     async function handleGoogleSignIn() {
         try {
             const userCredentials=await googleSignIn()
-            console.log(userCredentials)
-            const {displayName,email,uid} = userCredentials.user
-            const response = await fetch("http://localhost:3000/api/user",{
-                method:"POST",
-                headers:{"Content-Type":"application/json"},
-                body:JSON.stringify({
-                    firebaseUID:uid,
-                    name:displayName,
-                    email:email
-                })
-            })
+            const idToken = await userCredentials.user.getIdToken();
+
+            const response = await fetch("http://localhost:3000/api/auth/signin", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "Authorization": `Bearer ${idToken}` 
+                }
+            });
             if(!response.ok){
                 throw new Error("Failed to save new user")
             }
             navigate('/')
-        } catch (error) {
+        }catch (error) {
             console.error("Google Sign In Failed", error)
         }
     }

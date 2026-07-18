@@ -2,13 +2,22 @@ import styles from './btn.module.css'
 import logo from '/src/assets/cloud-upload.svg'
 import { useImage } from '../../../../image_context'
 import { useRef } from 'react'
+
 function UploadBtn(){
+    const MAX_SIZE = 10 * 1024 * 1024;
     const {setUploadImg}=useImage()
     const fileInputRef=useRef(null)
     const handleFileChange = (e) => {
-        if (e.target.files[0]) {
-            setUploadImg(URL.createObjectURL(e.target.files[0]));
+        const file = e.target.files[0];
+
+        if (!file) return;
+
+        if (file.size > MAX_SIZE) {
+            alert("File size must be less than 10 MB.");
+            e.target.value = ""; 
+            return;
         }
+        setUploadImg(URL.createObjectURL(file));
     };
     return(
         <>

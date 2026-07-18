@@ -1,20 +1,31 @@
 import mongoose from "mongoose";
 
 const userSchema=new mongoose.Schema({
-    firebaseUID:{
-        type:String,
-        unique:true,
-        required:true
+    uid: {
+      type: String,
+      required: true,
+      unique: true,
+      index: true,
     },
-    name:{
-        type:String,
-        required:true,
-        match:/^[A-Za-z ]+$/
+    email: {
+      type: String,
+      required: true,
+      unique: true,
+      lowercase: true,
+      trim: true,
     },
-    email:{
-        type:String,
-        required:true,
-        match:/^[a-zA-Z0-9]+@[a-zA-Z]+\.[a-zA-Z]{2,}$/
+    email_verified: {
+      type: Boolean,
+      required: true,
+    },
+    name: {
+      type: String,
+      default: "",
+      trim: true,
+    },
+    picture: {
+      type: String,
+      default: "",
     }
 },
 {

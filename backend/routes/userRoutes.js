@@ -1,12 +1,10 @@
 import express from 'express'
-const router=express.Router()//mini express application
 import { createUser } from '../controllers/userController.js'
 
+const router=express.Router()//mini express application
 
-router.get('/user/:id',(req,res)=>{
-    res.send("user found")
-})
 
-router.post('/user',createUser)
+router.post('/auth/signin',createUser)
+
 
 export default router
