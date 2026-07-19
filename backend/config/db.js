@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
+import dotenv from "dotenv";
+
+dotenv.config({ path: './database.env' });
 export async function connectDB() {
     try{
-        await mongoose.connect("mongodb://127.0.0.1:27017/VisionLab")
+        await mongoose.connect(process.env.MONDODB_URI)
         .then(()=>console.log("Connected"))
     }
     catch(err){
