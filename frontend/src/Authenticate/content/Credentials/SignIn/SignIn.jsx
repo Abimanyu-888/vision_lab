@@ -41,13 +41,13 @@ function SignIn({ isActive }) {
             {error && <div style={{color: 'red', fontSize: '12px'}}>{error}</div>}
             
             <div className={styles.input_group}>
-                <label className={styles.label}>Neural ID / Email</label>
+                <label className={styles.label}>Email</label>
                 <div className={styles.input_wrapper}>
                     <i data-lucide="mail" className={styles.input_icon}></i>
                     <input 
                         className={styles.value} 
                         type="email" 
-                        placeholder="user@vision.ai"
+                        placeholder="user@gmail.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required
@@ -58,7 +58,6 @@ function SignIn({ isActive }) {
             <div className={styles.input_group}>
                 <label className={`${styles.label} ${styles.label_row}`}>
                     <span>Passcode</span>
-                    <a href="#" className={styles.forgot_link}>Forgot?</a>
                 </label>
                 <div className={styles.input_wrapper}>
                     <i data-lucide="lock" className={styles.input_icon}></i>

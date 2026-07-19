@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState ,useEffect} from 'react'
 import styles from './Slider.module.css'
 
 function Slider({
@@ -10,6 +10,7 @@ function Slider({
     defaultValue = 50, 
     hasSlider = true 
 }){
+    
     const [value, setValue] = useState(defaultValue)
     const [isActive, setIsActive] = useState(false)
 

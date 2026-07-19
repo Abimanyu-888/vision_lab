@@ -1,30 +1,19 @@
 import { useState } from 'react';
 import styles from './ActiveInactiveBtn.module.css';
 
-function ActiveInactiveBtn({ label, onActivate, onDeactivate }) {
-    const [isActive, setIsActive] = useState(false);
+function ActiveInactiveBtn({ label, onCommit }) {
 
     const handleClick = () => {
-        if (!isActive) {
-            setIsActive(true);
-            if (onActivate) onActivate();
-        } else {
-            setIsActive(false);
-            if (onDeactivate) onDeactivate();
-        }
+        onCommit();
     };
 
     return (
-        <div className={styles.btn_group}>
-            <button 
-                className={`${styles.toggle_btn} ${isActive ? styles.active : ''}`}
+        <div className={styles.btn_group} >
+            <button style={{ textAlign: "center" }}
+                className={`${styles.toggle_btn}`}
                 onClick={handleClick}
             >
-                <span className={styles.label_text}>{label}</span>
-                <div className={`${styles.status_badge} ${isActive ? styles.badge_active : ''}`}>
-                    <span className={styles.dot}></span>
-                    <span className={styles.status_text}>{isActive ? "ACTIVE" : "INACTIVE"}</span>
-                </div>
+                <span className={styles.label_text} style={{ textAlign: "center" }}>{label}</span>
             </button>
         </div>
     );

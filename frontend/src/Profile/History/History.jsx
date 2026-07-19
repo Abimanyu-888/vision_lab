@@ -5,6 +5,7 @@ import { useAuth } from '../../auth_context';
 import { useState, useEffect } from "react";
 import styles from './History.module.css'
 
+
 function History(){
     const { currentUser } = useAuth();
     const [images, setImages] = useState([]);
@@ -73,6 +74,20 @@ function History(){
         }
     }
 
+    const handledownload=async function downloadImage(url,fileName) {
+        const response = await fetch(url);
+        const blob = await response.blob();
+
+        const blobUrl = window.URL.createObjectURL(blob);
+
+        const link = document.createElement("a");
+        link.href = blobUrl;
+        link.download = fileName;
+        link.click();
+
+        window.URL.revokeObjectURL(blobUrl);
+        }
+
     if (images.length === 0) {
         return null;
     }
@@ -115,13 +130,14 @@ function History(){
                             </h4>
                         </div>
 
-                        <a
+                        <download
                             href={image.url}
                             download
                             className="download-btn"
+                            onClick={() => handledownload(image.url,image.originalFilename)}
                         >
                             <img src={download} width="20" height="20" />
-                        </a>
+                        </download>
                         <a
                             onClick={() => handleDeleteOne(image.publicId)}
                             className="download-btn"

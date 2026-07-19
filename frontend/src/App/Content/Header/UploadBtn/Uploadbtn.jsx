@@ -6,6 +6,7 @@ import { useRef } from 'react'
 function UploadBtn(){
     const MAX_SIZE = 10 * 1024 * 1024;
     const {setUploadImg}=useImage()
+    const {setReloadKey,reloadKey}=useImage()
     const fileInputRef=useRef(null)
     const handleFileChange = (e) => {
         const file = e.target.files[0];
@@ -18,6 +19,8 @@ function UploadBtn(){
             return;
         }
         setUploadImg(URL.createObjectURL(file));
+        setReloadKey(reloadKey=>!reloadKey)
+
     };
     return(
         <>

@@ -11,6 +11,7 @@ export function ImageProvider({ children }) {
     const [uploadedImg, setUploadedImg] = useState(defaultImageImport);
     const [previousImg, setPreviousImg] = useState(null);
     const [redoImg, setRedoImg] = useState(null);
+    const [reloadKey, setReloadKey] = useState(0);
 
 
     const setUploadImg = (newImgOrFn) => {
@@ -44,7 +45,9 @@ export function ImageProvider({ children }) {
     return (
         <ImageContext.Provider value={{
             uploadedImg,
+            reloadKey,
             setUploadImg,
+            setReloadKey,
             undo,
             redo,
             canUndo: previousImg !== null,

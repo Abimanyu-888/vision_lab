@@ -63,13 +63,13 @@ function SignUp({ isActive }) {
             </div>
 
             <div className={styles.input_group}>
-                <label className={styles.label}>Work Email</label>
+                <label className={styles.label}>Email</label>
                 <div className={styles.input_wrapper}>
                     <i data-lucide="mail" className={styles.input_icon}></i>
                     <input 
                         className={styles.value} 
                         type="email" 
-                        placeholder="dev@vision.ai"
+                        placeholder="user@gmail.com"
                         value={email}
                         onChange={(e) => setEmail(e.target.value)}
                         required

@@ -71,18 +71,15 @@ function Filters(props) {
 
             <ActiveInactiveBtn 
                  label="Histogram Equalization" 
-                onActivate={() => applyFilter("HistogramEqualization")}
-                onDeactivate={() => undo && undo()}
+                onCommit={() => applyFilter("HistogramEqualization")}
             />
             <ActiveInactiveBtn 
                  label="Laplacian" 
-                onActivate={() => applyFilter("Laplacian")}
-                onDeactivate={() => undo && undo()}
+                onCommit={() => applyFilter("Laplacian")}
             />
             <ActiveInactiveBtn 
                  label="Sharpening (Unsharp Masking)" 
-                onActivate={() => applyFilter("Sharpening")}
-                onDeactivate={() => undo && undo()}
+                onCommit={() => applyFilter("Sharpening")}
             />
         </>
     );

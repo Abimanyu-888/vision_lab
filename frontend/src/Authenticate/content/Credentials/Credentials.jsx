@@ -69,10 +69,6 @@ function Credentials(){
             </div>
 
             <div className={styles.social_grid}>
-                <button className={styles.social_btn}>
-                    <img src={github_logo}/>
-                    <span>GITHUB</span>
-                </button>
                 <button className={styles.social_btn} onClick={handleGoogleSignIn} type="button">
                     <img src={google_logo}/>
                     <span>GOOGLE</span>

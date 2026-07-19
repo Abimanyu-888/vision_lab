@@ -19,7 +19,6 @@ function Nav() {
             </div>
 
             <div className={styles.nav_group}>
-                <NavItems btn_color={styles.btn_blue} active={currentFeature===1} thelogo={scan_txt_logo} txt_color={styles.text_neon_blue} name="Recognize Num" FeatureNo={1}/>
                 <NavItems btn_color={styles.btn_purple} active={currentFeature===2} thelogo={filter_logo} txt_color={styles.text_neon_purple} name="Filters" FeatureNo={2}/>
                 <NavItems btn_color={styles.btn_mint} active={currentFeature===3} thelogo={kernal_logo} txt_color={styles.text_neon_mint} name="Spatial Transform" FeatureNo={3}/>
             </div>

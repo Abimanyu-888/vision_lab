@@ -11,15 +11,12 @@ function SpacialTransfo(props){
         <>
             <ActiveInactiveBtn 
                     label="FlipHorizontal" 
-                    onActivate={() => applyFilter("FlipHorizontal")}
-                    onDeactivate={() => undo && undo()}
+                    onCommit={() => applyFilter("FlipHorizontal")}
             />
             <ActiveInactiveBtn 
                     label="FlipVertical" 
-                    onActivate={() => applyFilter("FlipVertical")}
-                    onDeactivate={() => undo && undo()}
+                    onCommit={() => applyFilter("FlipVertical")}
             />
-            <Slider label="Scale" onCommit={()=>{return 0}} />
 
         </>
     )

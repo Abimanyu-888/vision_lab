@@ -20,10 +20,6 @@ function Content(){
             <Credentials/>
             
 
-            <p className={styles.footer_text}>
-                &copy; 2024 VISIONLab. ACCESS RESTRICTED.
-            </p>
-
         </div>
     )
 }
