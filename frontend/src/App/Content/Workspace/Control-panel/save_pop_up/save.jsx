@@ -27,7 +27,7 @@ function SavePopup({ isOpen, onClose }) {
             formData.append("filename", filename);
 
             // Adjust this endpoint to match your Express backend routes
-            const uploadResponse = await fetch(`https://vision-lab-r57w.onrender.coms/api/image/${currentUser.uid}`, {
+            const uploadResponse = await fetch(`https://vision-lab-r57w.onrender.com/api/image/${currentUser.uid}`, {
                 method: "POST",
                 body: formData
             });

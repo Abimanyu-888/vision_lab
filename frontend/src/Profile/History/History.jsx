@@ -58,7 +58,7 @@ function History(){
     const handleDeleteAll=async()=>{
         try {
             const response = await fetch(
-                `http://localhost:3000/api/images/${currentUser.uid}`,{
+                `https://vision-lab-r57w.onrender.com/api/images/${currentUser.uid}`,{
                     method:"DELETE"
                 }
             );
