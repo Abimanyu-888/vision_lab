@@ -8,35 +8,38 @@ export function useImage() {
 }
 
 export function ImageProvider({ children }) {
-    const [history, setHistory] = useState([defaultImageImport]);
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const [uploadedImg, setUploadedImg] = useState(defaultImageImport);
+    const [previousImg, setPreviousImg] = useState(null);
+    const [redoImg, setRedoImg] = useState(null);
 
-    const uploadedImg = history[currentIndex];
 
     const setUploadImg = (newImgOrFn) => {
-        setHistory((prevHistory) => {
-            const currentImg = prevHistory[currentIndex];
-            const newImg = typeof newImgOrFn === 'function' ? newImgOrFn(currentImg) : newImgOrFn;
-            const nextHistory = prevHistory.slice(0, currentIndex + 1);
-            return [...nextHistory, newImg];
-        });
-        setCurrentIndex((prevIndex) => prevIndex + 1);
+        const newImg =
+            typeof newImgOrFn === "function"
+                ? newImgOrFn(uploadedImg)
+                : newImgOrFn;
+
+        setPreviousImg(uploadedImg);
+        setUploadedImg(newImg);
+        setRedoImg(null); 
     };
 
+
     const undo = () => {
-        if (currentIndex > 0) {
-            setCurrentIndex((prevIndex) => prevIndex - 1);
-        }
+        if (!previousImg) return;
+
+        setRedoImg(uploadedImg);
+        setUploadedImg(previousImg);
+        setPreviousImg(null);
     };
 
     const redo = () => {
-        if (currentIndex < history.length - 1) {
-            setCurrentIndex((prevIndex) => prevIndex + 1);
-        }
-    };
+        if (!redoImg) return;
 
-    const canUndo = currentIndex > 0;
-    const canRedo = currentIndex < history.length - 1;
+        setPreviousImg(uploadedImg);
+        setUploadedImg(redoImg);
+        setRedoImg(null);
+    };
 
     return (
         <ImageContext.Provider value={{
@@ -44,8 +47,8 @@ export function ImageProvider({ children }) {
             setUploadImg,
             undo,
             redo,
-            canUndo,
-            canRedo
+            canUndo: previousImg !== null,
+            canRedo: redoImg !== null
         }}>
             {children}
         </ImageContext.Provider>

@@ -1,6 +1,5 @@
 import logo from '/src/assets/aperture.svg'
 import kernal_logo from '/src/assets/squares-intersect.svg'
-import settings_logo from '/src/assets/settings.svg'
 import scan_txt_logo from '/src/assets/scan-text.svg'
 import filter_logo from '/src/assets/settings-2.svg'
 import { useFeature } from '../../feature_contest.jsx'
@@ -25,9 +24,6 @@ function Nav() {
                 <NavItems btn_color={styles.btn_mint} active={currentFeature===3} thelogo={kernal_logo} txt_color={styles.text_neon_mint} name="Spatial Transform" FeatureNo={3}/>
             </div>
 
-            <button className={styles.settings_btn}>
-                <img src={settings_logo}/>
-            </button>
         </nav>
     );
 }

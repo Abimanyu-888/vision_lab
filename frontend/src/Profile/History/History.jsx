@@ -8,28 +8,70 @@ import styles from './History.module.css'
 function History(){
     const { currentUser } = useAuth();
     const [images, setImages] = useState([]);
-    useEffect(() => {
-        async function fetchImages() {
-            try {
-                const response = await fetch(
-                    `http://localhost:3000/api/image/${currentUser.uid}`
-                );
-
-                if (!response.ok) {
-                    throw new Error("Failed to fetch images");
+    const fetchImages= async()=>{
+        try {
+            const response = await fetch(
+                `http://localhost:3000/api/image/${currentUser.uid}`,{
+                    method:"GET"
                 }
+            );
 
-                const data = await response.json();
-                setImages(data);
-            } catch (err) {
-                console.error(err);
+            if (!response.ok) {
+                throw new Error("Failed to fetch images");
             }
-        }
 
+            const data = await response.json();
+            setImages(data);
+        } catch (err) {
+            console.error(err);
+        }
+    }
+    useEffect(() => {
         if (currentUser) {
             fetchImages();
         }
     }, [currentUser]);
+    const handleDeleteOne=async(publicId)=>{
+        try {
+            const response = await fetch(
+                "http://localhost:3000/api/image/",{
+                    method:"DELETE",
+                    headers:{
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                        publicId: publicId
+                    })
+
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to delete image");
+            }
+
+            setImages(prev => prev.filter(img => img.publicId !== publicId));
+        } catch (err) {
+            console.error(err);
+        }
+    }
+    const handleDeleteAll=async()=>{
+        try {
+            const response = await fetch(
+                `http://localhost:3000/api/images/${currentUser.uid}`,{
+                    method:"DELETE"
+                }
+            );
+
+            if (!response.ok) {
+                throw new Error("Failed to delete images");
+            }
+
+            setImages([]);
+        } catch (err) {
+            console.error(err);
+        }
+    }
 
     if (images.length === 0) {
         return null;
@@ -44,7 +86,8 @@ function History(){
                     </div>
                     Recent Activity
                 </h2>
-                <button style={{
+                <button onClick={() => handleDeleteAll()}
+                    style={{
                         padding: '6px 12px',
                         borderRadius: '6px',
                         border: '1px solid rgba(239, 68, 68, 0.4)',
@@ -80,7 +123,7 @@ function History(){
                             <img src={download} width="20" height="20" />
                         </a>
                         <a
-                            onClick={() => handleDeleteOne(image._id)}
+                            onClick={() => handleDeleteOne(image.publicId)}
                             className="download-btn"
                             title="Delete"
                         >

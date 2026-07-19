@@ -49,7 +49,7 @@ export async function uploadImage(req,res) {
 export async function getImage(req,res) {
     try {
         const { uid } = req.params;
-        const images = await Image.find({ uid: uid }).select('url originalFilename -_id');
+        const images = await Image.find({ uid: uid }).select('url originalFilename publicId -_id');
         if (!images || images.length === 0) {
             return res.status(200).json([]); // Return empty array if no images found
         }
@@ -60,4 +60,40 @@ export async function getImage(req,res) {
         return res.status(500).json({ error: "Internal server error while fetching images." });
     }
     
+}
+
+export async function deleteImage(req,res) {
+    try{
+        const { publicId }=req.body;
+        await cloudinary.uploader.destroy(publicId);
+        await Image.deleteOne({publicId:publicId});
+        return res.status(200).json({
+            message: "Image deleted successfully"
+        });
+    }
+    catch(error){
+        console.error("Failed to delete user images", error);
+        return res.status(500).json({ error: "Failed to delete user images." });
+    }
+}
+
+export async function deleteAllImages(req,res) {
+    try{    
+        const { uid }=req.params;
+        const images=await Image.find({ uploadedBy:uid }).select('publicId');
+        if (images.length === 0) {
+            return res.status(404).json({ message: "No images found" });
+        }
+        await Promise.all(
+            images.map(image => cloudinary.uploader.destroy(image.publicId))
+        );
+        await Image.deleteMany({ uploadedBy:uid });
+        return res.status(200).json({
+            message: "All images deleted successfully"
+        });
+    }
+    catch(error){
+        console.error("Failed to delete user images", error);
+        return res.status(500).json({ error: "Failed to delete user images." });
+    }
 }
