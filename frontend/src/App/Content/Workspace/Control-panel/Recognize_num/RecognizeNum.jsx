@@ -1,4 +1,4 @@
-import Slider from "../design/slider.jsx"
+import Slider from "../design/Slider.jsx"
 function RecognizeNum(){
     return(
     <>
