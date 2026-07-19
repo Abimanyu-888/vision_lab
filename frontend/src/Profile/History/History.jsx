@@ -11,7 +11,7 @@ function History(){
     const fetchImages= async()=>{
         try {
             const response = await fetch(
-                `http://localhost:3000/api/image/${currentUser.uid}`,{
+                `https://vision-lab-r57w.onrender.com/api/image/${currentUser.uid}`,{
                     method:"GET"
                 }
             );
@@ -34,7 +34,7 @@ function History(){
     const handleDeleteOne=async(publicId)=>{
         try {
             const response = await fetch(
-                "http://localhost:3000/api/image/",{
+                "https://vision-lab-r57w.onrender.com/api/image/",{
                     method:"DELETE",
                     headers:{
                         "Content-Type": "application/json",

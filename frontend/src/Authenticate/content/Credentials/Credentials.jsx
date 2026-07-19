@@ -16,7 +16,7 @@ function Credentials(){
             const userCredentials=await googleSignIn()
             const idToken = await userCredentials.user.getIdToken();
 
-            const response = await fetch("http://localhost:3000/api/auth/signin", {
+            const response = await fetch("https://vision-lab-r57w.onrender.com/api/auth/signin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",

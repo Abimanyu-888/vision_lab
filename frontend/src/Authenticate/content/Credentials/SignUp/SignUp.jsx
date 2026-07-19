@@ -28,7 +28,7 @@ function SignUp({ isActive }) {
             await updateProfile(userCredentials.user, {photoURL: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSqLOxRW9wIvJfJHNtxsSBRGG7drOdLd5NwKKAbnii5FA&s=10",});
 
             const idToken = await userCredentials.user.getIdToken(true);
-            const response = await fetch("http://localhost:3000/api/auth/signin", {
+            const response = await fetch("https://vision-lab-r57w.onrender.com/api/auth/signin", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
