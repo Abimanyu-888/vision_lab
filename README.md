@@ -2,6 +2,9 @@
 
 **VisionLab** is a high-performance image processing application that brings low-level C++ performance to the browser using **WebAssembly (Wasm)**. Combined with a modern React frontend and a scalable Node.js/Express backend, VisionLab delivers near-instantaneous visual transformations and secure cloud image management.
 
+🌐 **Live Application:** [https://vision-lab-delta.vercel.app/](https://vision-lab-delta.vercel.app/)  
+⚙️ **Backend API:** [https://vision-lab-r57w.onrender.com](https://vision-lab-r57w.onrender.com)
+
 ---
 
 ## 🌟 Key Features
