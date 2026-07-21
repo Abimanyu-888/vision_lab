@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../../../../auth_context';
 import { useImage } from '../../../../../image_context';
 import styles from './save.module.css';
@@ -9,8 +10,37 @@ function SavePopup({ isOpen, onClose }) {
     
     const { currentUser } = useAuth();
     const { uploadedImg } = useImage();
+    const navigate = useNavigate();
 
     if (!isOpen) return null;
+
+    if (!currentUser) {
+        return (
+            <div className={styles.overlay}>
+                <div className={styles.modal_panel}>
+                    <h3 className={styles.title}>LOGIN REQUIRED</h3>
+                    <p className={styles.label} style={{ fontSize: '0.875rem', marginBottom: '1.5rem', lineHeight: '1.4' }}>
+                        You must be logged in to save your assets to your cloud library.
+                    </p>
+                    <div className={styles.btn_group}>
+                        <button type="button" className={styles.cancel_btn} onClick={onClose}>
+                            CANCEL
+                        </button>
+                        <button 
+                            type="button" 
+                            className={styles.save_btn} 
+                            onClick={() => {
+                                onClose();
+                                navigate('/login');
+                            }}
+                        >
+                            GO TO LOGIN
+                        </button>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     const handleSave = async (e) => {
         e.preventDefault();
